@@ -1,8 +1,7 @@
 # ALMEER MUSIC
-A dark Android music player foundation with real local MediaStore scanning, offline playback through Media3, search, and an offline DJ workspace UI.
 
-## Build
-Open in Android Studio or push to GitHub. The included GitHub Actions workflow builds `app-debug.apk` as an artifact.
+Android music player foundation with local/offline music playback and an offline DJ workspace.
 
-## API note
-Official services such as YouTube/YouTube Music, Apple Music, and Boomplay have different API, playback, download, and licensing restrictions. This project deliberately does not scrape, bypass DRM, or download protected streams. Provider integrations should use official APIs/SDKs and their permitted playback/download mechanisms.
+Build with GitHub Actions using JDK 17, Android SDK 35, Gradle 8.9, AGP 8.7.3 and Kotlin 1.9.25.
+
+The DJ controls in this version are UI foundations; they do not yet implement a full professional dual-deck audio mixer, scratching engine, BPM analysis or effects engine.
