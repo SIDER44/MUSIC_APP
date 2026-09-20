@@ -380,7 +380,7 @@ class MainActivity : ComponentActivity() {
             val isA = deck === deckA
             if (enabled) {
                 val eq = Equalizer(0, session).apply {
-                    enabled = true
+                    setEnabled(true)
                     for (band in 0 until numberOfBands) setBandLevel(band.toShort(), 700.toShort())
                 }
                 val bass = BassBoost(0, session).apply { enabled = true; setStrength(700.toShort()) }
