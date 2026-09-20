@@ -15,6 +15,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -126,8 +127,9 @@ class MainActivity : ComponentActivity() {
         val dir = File(getExternalFilesDir(null), "music")
         if (!dir.exists()) dir.mkdirs()
         val list = dir.listFiles()?.filter { it.extension.lowercase() == "mp3" || it.extension.lowercase() == "ogg" }?.map {
-            val parts = it.nameWithoutExtension.split("___", limit = 2)
-            LocalTrack(parts.getOrElse(1) { it.nameWithoutExtension }, "ALMEER DOWNLOAD", android.net.Uri.fromFile(it), it)
+            val file = it
+            val parts = file.nameWithoutExtension.split("___", limit = 2)
+            LocalTrack(parts.getOrElse(1) { file.nameWithoutExtension }, "ALMEER DOWNLOAD", android.net.Uri.fromFile(file), file)
         } ?: emptyList()
         downloaded.clear(); downloaded.addAll(list)
     }
@@ -231,7 +233,7 @@ class MainActivity : ComponentActivity() {
                     when (tab) {
                         2 -> DjStudio()
                         else -> HomeLibrary(query, online, searching, current, currentOnline, isPlaying,
-                            onLocal = { current = it; currentOnline = null; play(it); isPlaying = true },
+                            onLocal = { current = it; currentOnline = null; play(it.uri); isPlaying = true },
                             onOnline = { currentOnline = it; current = null; playOnline(it); isPlaying = true },
                             onDownload = ::download)
                     }
@@ -379,9 +381,9 @@ class MainActivity : ComponentActivity() {
             if (enabled) {
                 val eq = Equalizer(0, session).apply {
                     enabled = true
-                    for (band in 0 until numberOfBands) setBandLevel(band.toShort(), 700)
+                    for (band in 0 until numberOfBands) setBandLevel(band.toShort(), 700.toShort())
                 }
-                val bass = BassBoost(0, session).apply { enabled = true; strength = 700 }
+                val bass = BassBoost(0, session).apply { enabled = true; setStrength(700.toShort()) }
                 if (isA) { eqA?.release(); bassA?.release(); eqA = eq; bassA = bass }
                 else { eqB?.release(); bassB?.release(); eqB = eq; bassB = bass }
             } else {
